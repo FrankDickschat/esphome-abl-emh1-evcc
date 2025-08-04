@@ -4,7 +4,7 @@ import esphome.config_validation as cv
 from esphome.const import CONF_ID
 
 AUTO_LOAD = ["emh1_modbus", "sensor", "text_sensor"]
-CODEOWNERS = ["@jrv"]
+CODEOWNERS = ["@jrv", "@fdi"]
 MULTI_CONF = True
 
 CONF_ABL_EMH1_ID = "abl_emh1_id"

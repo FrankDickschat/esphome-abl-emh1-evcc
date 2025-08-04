@@ -9,6 +9,7 @@ DEPENDENCIES = ["abl_emh1"]
 
 CONF_MODE = "mode"
 CONF_SERIAL_NUMBER = "serial_number"
+CONF_EVCC_STATE = "evcc_state"
 
 ICON_MODE = "mdi:information"
 ICON_SERIAL_NUMBER = "mdi:information"
@@ -22,9 +23,11 @@ CONFIG_SCHEMA = cv.Schema(
         cv.Optional(CONF_SERIAL_NUMBER): text_sensor.text_sensor_schema(
             text_sensor.TextSensor, icon=ICON_SERIAL_NUMBER
         ),
+        cv.Optional(CONF_EVCC_STATE): text_sensor.text_sensor_schema(
+            text_sensor.TextSensor, icon=ICON_MODE
+        ),
     }
 )
-
 
 async def to_code(config):
     hub = await cg.get_variable(config[CONF_ABL_EMH1_ID])
