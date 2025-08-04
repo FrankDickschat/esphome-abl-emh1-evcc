@@ -2,6 +2,7 @@ substitutions:
   name: "abl-emh1"
   device_description: "Monitor and configure ABL eMH1 Charger via RS485/Modbus-ASCII"
   external_components_source: https://github.com/FrankDickschat/esphome-abl-emh1-evcc
+  # Originally from           https://github.com/jrv/esphome-abl-emh1
   tx_pin: "GPIO1"
   rx_pin: "GPIO3"
   flow_control_pin: "GPIO12"
