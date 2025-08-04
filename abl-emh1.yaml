@@ -1,21 +1,21 @@
 substitutions:
-  name: abl_emh1
+  name: "abl-emh1"
   device_description: "Monitor and configure ABL eMH1 Charger via RS485/Modbus-ASCII"
-  external_components_source: https://github.com/jrv/esphome-abl-emh1
-  tx_pin: "17"
-  rx_pin: "16"
-  flow_control_pin: "5"
+  external_components_source: https://github.com/FrankDickschat/esphome-abl-emh1-evcc
+  tx_pin: "GPIO1"
+  rx_pin: "GPIO3"
+  flow_control_pin: "GPIO12"
 
 esphome:
   name: ${name}
   comment: ${device_description}
   friendly_name: ABL eMH1
   project:
-    name: "jrv.esphome-abl-emh1"
+    name: "FrankDickschat/esphome-abl-emh1-evcc"
     version: 0.0.1
 
-esp32:
-  board: esp32dev
+esp8266:
+  board: d1_mini
 
 external_components:
   source:
@@ -32,8 +32,12 @@ ota:
   - platform: esphome
     password: !secret ota_password
 
+# redirecting the logging uart to the second one (only TX) for good measure
+# see https://esphome.io/components/uart.html#hardware-uarts
+# I don't know if this is necessary
 logger:
-  level: DEBUG
+  #level: DEBUG
+  hardware_uart: "UART1"
 
 api:
   encryption:
@@ -65,6 +69,8 @@ text_sensor:
     serial_number:
       name: "Serial number"
       disabled_by_default: true
+    evcc_state:
+      name: "evcc State"
   - platform: template
     name: Chargemode
     id: chargemode
@@ -81,7 +87,7 @@ text_sensor:
         if (id(l3_current).state > 1.0)
           phaseCnt++;
       }
-      std::__cxx11::string result;
+      std::string result;
       switch (phaseCnt){
         case 0: 
           result = "None";
