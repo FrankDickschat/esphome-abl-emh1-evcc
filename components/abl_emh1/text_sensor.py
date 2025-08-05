@@ -31,7 +31,7 @@ CONFIG_SCHEMA = cv.Schema(
 
 async def to_code(config):
     hub = await cg.get_variable(config[CONF_ABL_EMH1_ID])
-    for key in [CONF_MODE, CONF_SERIAL_NUMBER]:
+    for key in [CONF_MODE, CONF_SERIAL_NUMBER, CONF_EVCC_STATE]:
         if key in config:
             conf = config[key]
             sens = cg.new_Pvariable(conf[CONF_ID])
