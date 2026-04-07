@@ -41,28 +41,28 @@ static const char STATECODE[STATE_SIZE] = {
   0xF9, 0xFA, 0xFB, 0x00
 };
 static const char *const STATECODE_EVCC[STATE_SIZE] = {
-	"A", // A1 "Waiting for EV"
-	"C", // B1 "EV is asking for charging"
-	"B", // B2 "EV has the permission to charge"
-	"D", // C2 "EV is charging"
-	"D", // C3 "C2, reduced current (error F16, F17)"
-	"D", // C4 "C2, reduced current (imbalance F15)"
-	"F", // E0 "Outlet disabled"
-	"E", // E1 "Production test"
-	"E", // E2 "EVCC setup mode"
-	"E", // E3 "Bus idle"
-	"E", // F1 "Unintended closed contact (Welding)"
-	"E", // F2 "Internal error"
-  "E", // F3 "DC residual current detected"
-	"E", // F4 "Upstream communication timeout"
-	"E", // F5 "Lock of socket failed"
-	"E", // F6 "CS out of range"
-	"E", // F7 "State D requested by EV"
-	"E", // F8 "CP out of range"
-	"E", // F9 "Overcurrent detected"
-	"E", // FA "Temperature outside limits"
-	"E", // FB "Unintended opened contact"
-  "E"  //    "Unknown State code"
+  "A", // A1 Waiting for EV
+  "B", // B1 EV is asking for charging
+  "B", // B2 EV has the permission to charge
+  "C", // C2 EV is charging
+  "C", // C3 reduced current (error F16, F17)
+  "C", // C4 reduced current (imbalance F15)
+  "B", // E0 Outlet disabled
+  "E", // E1 Production test
+  "E", // E2 EVCC setup mode
+  "E", // E3 Bus idle
+  "E", // F1 Unintended closed contact (Welding)
+  "E", // F2 Internal error
+  "E", // F3 DC residual current detected
+  "E", // F4 Upstream communication timeout
+  "E", // F5 Lock of socket failed
+  "E", // F6 CS out of range
+  "E", // F7 State D requested by EV
+  "E", // F8 CP out of range
+  "E", // F9 Overcurrent detected
+  "E", // FA Temperature outside limits
+  "E", // FB Unintended opened contact
+  "E"  // Unknown State code
 };
 // EVCC.io States
 // State A (Standby):
