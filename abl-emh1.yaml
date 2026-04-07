@@ -13,7 +13,7 @@ esphome:
   friendly_name: ABL eMH1
   project:
     name: "FrankDickschat/esphome-abl-emh1-evcc"
-    version: 0.0.1
+    version: 0.0.2
 
 esp8266:
   board: d1_mini
@@ -49,7 +49,7 @@ uart:
   baud_rate: 38400
   tx_pin: ${tx_pin}
   rx_pin: ${rx_pin}
-  parity: EVEN
+  parity: NONE
 
 emh1_modbus:
     uart_id: uart_2
@@ -88,18 +88,14 @@ text_sensor:
         if (id(l3_current).state > 1.0)
           phaseCnt++;
       }
-      std::string result;
-      switch (phaseCnt){
-        case 0: 
-          result = "None";
-          break;
+      switch (phaseCnt) {
+        case 0:
+          return {"None"};
         case 1:
-          result = "1 Phase";
-          break;
+          return {"1 Phase"};
         default:
-          result = "3 Phase";
+          return {"3 Phase"};
       }
-      return result;
 
 sensor:
   - platform: abl_emh1
@@ -155,7 +151,7 @@ number:
     step: 1
     optimistic: false
     lambda: 'return std::lround(id(max_current).state);'
-    update_interval: 1s
+    update_interval: 10s
     set_action:
       lambda: |-
         ESP_LOGD("main", "Sending modbus value = %d", std::lround(x));
@@ -165,7 +161,7 @@ switch:
   - platform: template
     name: "Enable"
     id: enable_switch
-    icon: "mdi:power"
+    icon: mdi:power
     lambda: 'return (id(outlet_state).state != 0xE0);'
     turn_off_action: 
       - lambda: |-
@@ -175,7 +171,3 @@ switch:
       - lambda: |-
           if ((id(abl_uptime).state > 10.0) && (id(outlet_state).state != NAN))
             id(modbus0)->send_enable(1);
-
- 
-
-          
