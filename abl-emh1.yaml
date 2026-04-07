@@ -142,21 +142,36 @@ sensor:
     id: abl_uptime
     update_interval: 15s
 
+#number:
+#  - platform: template
+#    name: "Max Amps"
+#    id: set_current
+#    icon: mdi:arrow-oscillating
+#    min_value: 3
+#    max_value: 16
+#    step: 1
+#    optimistic: false
+#    lambda: 'return std::lround(id(max_current).state);'
+#    update_interval: 10s
+#    set_action:
+#      lambda: |-
+#        ESP_LOGD("main", "Sending modbus value = %d", std::lround(x));
+#        id(modbus0)->send_current(std::lround(x));
 number:
   - platform: template
     name: "Max Amps"
     id: set_current
     icon: mdi:arrow-oscillating
-    min_value: 3
+    min_value: 6
     max_value: 16
-    step: 1
+    step: 0.1
     optimistic: false
-    lambda: 'return std::lround(id(max_current).state);'
+    lambda: 'return id(max_current).state;'
     update_interval: 10s
     set_action:
       lambda: |-
-        ESP_LOGD("main", "Sending modbus value = %d", std::lround(x));
-        id(modbus0)->send_current(std::lround(x));
+        ESP_LOGD("main", "Sending modbus value = %.2f", x);
+        id(modbus0)->send_current(x);
 
 switch:
   - platform: template

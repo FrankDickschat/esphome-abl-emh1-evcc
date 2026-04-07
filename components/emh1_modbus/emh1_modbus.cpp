@@ -190,20 +190,41 @@ void eMH1Modbus::get_serial() {
 }
 
 // set Max current
-void eMH1Modbus::send_current(uint8_t x) {
-	eMH1MessageT *tx_message = &this->emh1_tx_message;
-  tx_message->DeviceId = 0x01;				// default address
-	tx_message->FunctionCode = 0x10;		// write operation
-	tx_message->Destination = 0x0014;		// Set Ic Max
-	tx_message->DataLength = 0x0001;		// 1 16-bit register
-	tx_message->WriteBytes = 0x02;			// quantity of value bytes
-	uint16_t v = std::floor(16.67*x);
-  ESP_LOGD(TAG, "Set Max Current to %d Amps (0x%04X)", x, v);
-	uint8_t v1 = 0 + (v >> 8);
-	uint8_t v2 = 0 + (v & 0x00FF);
-	tx_message->Data[0] = v1;
-	tx_message->Data[1] = v2;
-	this->send();
+//void eMH1Modbus::send_current(uint8_t x) {
+//	eMH1MessageT *tx_message = &this->emh1_tx_message;
+//  tx_message->DeviceId = 0x01;				// default address
+//	tx_message->FunctionCode = 0x10;		// write operation
+//	tx_message->Destination = 0x0014;		// Set Ic Max
+//	tx_message->DataLength = 0x0001;		// 1 16-bit register
+//	tx_message->WriteBytes = 0x02;			// quantity of value bytes
+//	uint16_t v = std::floor(16.67*x);
+//  ESP_LOGD(TAG, "Set Max Current to %d Amps (0x%04X)", x, v);
+//	uint8_t v1 = 0 + (v >> 8);
+//	uint8_t v2 = 0 + (v & 0x00FF);
+//	tx_message->Data[0] = v1;
+//	tx_message->Data[1] = v2;
+//	this->send();
+//}
+void eMH1Modbus::send_current(float x) {
+  eMH1MessageT *tx_message = &this->emh1_tx_message;
+
+  tx_message->DeviceId = 0x01;
+  tx_message->FunctionCode = 0x10;
+  tx_message->Destination = 0x0014;
+  tx_message->DataLength = 0x0001;
+  tx_message->WriteBytes = 0x02;
+
+  uint16_t v = static_cast<uint16_t>(std::floor(x / 0.06f));
+
+  ESP_LOGD(TAG, "Set Max Current to %.2f Amps (0x%04X)", x, v);
+
+  uint8_t v1 = (v >> 8) & 0xFF;
+  uint8_t v2 = v & 0xFF;
+
+  tx_message->Data[0] = v1;
+  tx_message->Data[1] = v2;
+
+  this->send();
 }
 
 // send enable/disable
