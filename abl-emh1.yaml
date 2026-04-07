@@ -1,6 +1,6 @@
 substitutions:
   name: "abl-emh1"
-  device_description: "Monitor and configure ABL eMH1 Charger via RS485/Modbus-ASCII"
+  device_description: "ABL eMH1 1W1108 Electric Vehicle Charger Interface"
   external_components_source: https://github.com/FrankDickschat/esphome-abl-emh1-evcc
   # Originally from           https://github.com/jrv/esphome-abl-emh1
   tx_pin: "GPIO1"
@@ -10,7 +10,7 @@ substitutions:
 esphome:
   name: ${name}
   comment: ${device_description}
-  friendly_name: ABL eMH1
+  friendly_name: ABL eMH1 (1W1108)
   project:
     name: "FrankDickschat/esphome-abl-emh1-evcc"
     version: 0.0.2
@@ -26,6 +26,7 @@ external_components:
   refresh: 0s
 
 wifi:
+  min_auth_mode: WPA2
   ssid: !secret wifi_ssid
   password: !secret wifi_password
 
@@ -147,7 +148,7 @@ number:
     id: set_current
     icon: mdi:arrow-oscillating
     min_value: 3
-    max_value: 32
+    max_value: 16
     step: 1
     optimistic: false
     lambda: 'return std::lround(id(max_current).state);'
