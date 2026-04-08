@@ -50,7 +50,7 @@ uart:
   baud_rate: 38400
   tx_pin: ${tx_pin}
   rx_pin: ${rx_pin}
-  parity: NONE
+  parity: EVEN
 
 emh1_modbus:
     uart_id: uart_2
@@ -142,7 +142,7 @@ sensor:
     id: abl_uptime
     update_interval: 15s
 
-#number:
+#number: # Full Amps only
 #  - platform: template
 #    name: "Max Amps"
 #    id: set_current
@@ -157,7 +157,7 @@ sensor:
 #      lambda: |-
 #        ESP_LOGD("main", "Sending modbus value = %d", std::lround(x));
 #        id(modbus0)->send_current(std::lround(x));
-number:
+number: # Milli Amps possible
   - platform: template
     name: "Max Amps"
     id: set_current
